@@ -1,5 +1,6 @@
 from  json import load,dump
 from os.path import join
+from random import randrange,seed
 
 
 def read_data():
@@ -10,7 +11,7 @@ def read_data():
 def write_data(movies):
     data ={'movies':movies}
     file =open(join('App','database','data.json'),'w')
-    dump(data,file,skipkeys=True)
+    dump(data,file,sort_keys=True)
     file.close() 
 
 def get_all_movie():
@@ -18,9 +19,11 @@ def get_all_movie():
     
 def add_movie(movie):
     movies =read_data()
-    movie['id']=len(movies)
+    movie['id']=randrange(0,1000000)
+    seed(movie['id'])
     movies.append(movie)
     write_data(movies)
+    return movie
    
    
 def find_movie(id,movies):
@@ -32,15 +35,16 @@ def delete_movie(id):
     movies =read_data()
     index = find_movie(id,movies)
     if index != None :
-        movie = movies.pop(index)
+        movie =movies.pop(index)
         write_data(movies)
-        return movie      
+        return movie
+    
+         
 
 
 
 def update_movie(movie,id):
     movies = read_data()
-    print(movies)
     index = find_movie(id,movies)
     if index !=None:
         movie['id']=id
