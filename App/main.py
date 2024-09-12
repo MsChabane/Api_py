@@ -32,7 +32,7 @@ def update_movie_(id:int,movie:Movie):
     return movie_updated
 
 @app.delete('/api/movies/{id}',status_code=status.HTTP_204_NO_CONTENT)
-def update_movie_(id:int,movie:Movie):
+def delete_movie_(id:int,movie:Movie):
     movie = update_movie(id=id,movie=movie.dict())
     if movie == None :
         return HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail='movie was not exist')
